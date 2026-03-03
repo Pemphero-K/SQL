@@ -1,0 +1,26 @@
+SELECT
+skills,
+ROUND (AVG(salary_year_avg), 0) AS avg_salary
+FROM job_postings_fact
+INNER JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+INNER JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+WHERE
+Job_title_short = 'Data Analyst'
+AND salary_year_avg IS NOT NULL
+GROUP BY
+skills
+ORDER BY
+avg_salary DESC
+LIMIT 25
+
+/*This dataset highlights an important shift: the highest average salaries are strongly associated with **infrastructure, DevOps, blockchain, and advanced machine learning skills**, rather than traditional data analysis tools.
+
+The most extreme outlier is **SVN at $400,000**, which likely reflects a very small sample size or niche enterprise role rather than broad market value. Excluding that anomaly, the highest-paying skills cluster around specialized engineering domains.
+ For example, **Solidity ($179K)** signals high compensation in blockchain development. Tools like **Terraform, Ansible, Puppet, GitLab, and Kafka** show that DevOps and distributed systems expertise command strong salaries.
+  Meanwhile, machine learning frameworks such as **TensorFlow, PyTorch, Keras, MXNet, and Hugging Face** indicate that advanced AI engineering skills are highly rewarded.
+
+Data infrastructure technologies like **Cassandra, Couchbase, Airflow, and Scala** further reinforce that backend data architecture and pipeline management roles tend to pay more than standard analytics roles.
+ Even platforms like **DataRobot** suggest that applied AI and automation experience adds salary premium.
+
+Overall, the pattern is clear: the highest salaries are tied to highly specialized, engineering-heavy skills that support scalable systems, AI development, or cloud infrastructure. Compared to general data analyst tools (like SQL or Excel), these skills are more technical, less common, and therefore command higher compensation.
+*/
